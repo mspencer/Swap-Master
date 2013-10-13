@@ -1,3 +1,3 @@
-#StarsShifter game
+#Swap Master game
 
 #mintra@outlook.com
