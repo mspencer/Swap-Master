@@ -38,6 +38,7 @@ body  {
 #splash-screen .continue {
 	cursor:pointer;
 	font-size:0.75em;
+	display:none;
 }
 
 .logo {
@@ -54,6 +55,22 @@ body  {
 
 .no-textshadow .logo {
 	filter:dropshadow(color=#000000,offX=3,offY=4);
+}
+
+/* Progress bar */
+.progress {
+	margin:0 auto;
+	width:6em;
+	height:0.5em;
+	border-radius:0.5em;
+	overflow:hidden;
+	border:1px solid rgb(200,200,100);
+}
+
+.progress .indicator {
+	background-color:rgb(200,200,100);
+	height:100%;
+	width:0%;
 }
 
 /* Install screen for iOS devices */
@@ -104,4 +121,15 @@ ul.menu li button:hover {
 ul.menu li button:active {
 	color:rgb(255,255,0);
 	background:rgb(30,40,0);
+}
+
+.block-size {
+	font-size:40px;
+}
+
+#block-proto {
+	position:absolute;
+	width:1em;
+	height:1em;
+	left:-1000px;
 }

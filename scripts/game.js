@@ -10,8 +10,11 @@ swapGame.game = (function () {
 			dom.removeClass(activeScreen, "active");
 		}
 		
+		// extract screen parameters from arguments
+		var args = Array.prototype.slice.call(arguments,1);		
 		// run the screen module
-		swapGame.screens[screenId].run();
+		swapGame.screens[screenId].run.apply(swapGame.screens[screenId], args);
+		
 		// display the screen html
 		dom.addClass(screen, "active");
 	}

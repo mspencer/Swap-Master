@@ -5,11 +5,17 @@ var swapGame = {
 		cols:8,
 		baseScore:100,
 		numBlockTypes:7
-	}
+	},
+	images: {}
 };
 
 // wait until main document is loaded
 window.addEventListener("load", function () {
+
+	// determine block size
+	var blockProto = document.getElementById("block-proto"),
+		rect = blockProto.getBoundingClientRect();
+	block.settings.blockSize = rect.width;
 	
 	// function test if the user has the option to install the application but hasn't done it yet
 	Modernizr.addTest("standalone", function () {
@@ -21,6 +27,34 @@ window.addEventListener("load", function () {
 		resource.noexec = true;
 		return resource;
 	});
+	
+	var numPreload = 0,
+		numLoaded = 0;
+	yepnope.addPrefix("loader", function(resource) {
+		// console.log("Loading: " + resource.url);
+		var isImage = /.+\.(jpg|png|gif)$/i.test(resource.url);
+		resource.noexec = isImage;
+		
+		numPreload++;
+		resource.autoCallback = function(e) {
+			// console.log("Finished loading: " + resource.url);
+			numLoaded++;
+			if (isImage) {
+				var image = new Image();
+				image.src = resource.url;
+				block.images[resource.url] = image;
+			}
+		};
+		return resource;
+	});
+	
+	function getLoadProgress () {
+		if (numPreloaded > 0) {
+			return numLoaded/numPreloaded;
+		} else {
+			return 0;
+		}
+	}
 	
 	// loading stage 1
 	Modernizr.load([
@@ -42,7 +76,7 @@ window.addEventListener("load", function () {
 				swapGame.game.setup();
 				// show the first screen
 				if (Modernizr.standalone) {
-					swapGame.game.showScreen("splash-screen");
+					swapGame.game.showScreen("splash-screen", getLoadProgress);
 				} else {
 					swapGame.game.showScreen("install-screen");
 				}
@@ -55,7 +89,8 @@ window.addEventListener("load", function () {
 		Modernizr.load([
 		{
 			load: [
-				"scripts/screen.main-menu.js",
+				"loader!scripts/screen.main-menu.js",
+				"loader!images/blocks" + block.settings.blockSize + ".png"
 			]
 		}, {
 			test: Modernizr.webworkers,
@@ -63,7 +98,7 @@ window.addEventListener("load", function () {
 				"scripts/board.worker.interface.js",
 				"preload!scripts/board.worker.js"
 			],
-			nope: "scripts/board.js"
+			nope: "loader!scripts/board.js"
 		}
 		]);
 	}
