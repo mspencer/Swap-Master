@@ -15,7 +15,7 @@ window.addEventListener("load", function () {
 	// determine block size
 	var blockProto = document.getElementById("block-proto"),
 		rect = blockProto.getBoundingClientRect();
-	block.settings.blockSize = rect.width;
+	swapGame.settings.blockSize = rect.width;
 	
 	// function test if the user has the option to install the application but hasn't done it yet
 	Modernizr.addTest("standalone", function () {
@@ -29,7 +29,7 @@ window.addEventListener("load", function () {
 	});
 	
 	var numPreload = 0,
-		numLoaded = 0;
+		numLoad = 0;
 	yepnope.addPrefix("loader", function(resource) {
 		// console.log("Loading: " + resource.url);
 		var isImage = /.+\.(jpg|png|gif)$/i.test(resource.url);
@@ -38,19 +38,19 @@ window.addEventListener("load", function () {
 		numPreload++;
 		resource.autoCallback = function(e) {
 			// console.log("Finished loading: " + resource.url);
-			numLoaded++;
+			numLoad++;
 			if (isImage) {
 				var image = new Image();
 				image.src = resource.url;
-				block.images[resource.url] = image;
+				swapGame.images[resource.url] = image;
 			}
 		};
 		return resource;
 	});
 	
 	function getLoadProgress () {
-		if (numPreloaded > 0) {
-			return numLoaded/numPreloaded;
+		if (numPreload > 0) {
+			return numLoad/numPreload;
 		} else {
 			return 0;
 		}
@@ -90,7 +90,8 @@ window.addEventListener("load", function () {
 		{
 			load: [
 				"loader!scripts/screen.main-menu.js",
-				"loader!images/blocks" + block.settings.blockSize + ".png"
+				"loader!scripts/display.canvas.js",
+				"loader!images/blocks" + swapGame.settings.blockSize + ".png"
 			]
 		}, {
 			test: Modernizr.webworkers,
