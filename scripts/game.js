@@ -21,8 +21,7 @@ swapGame.game = (function () {
 	
 	// create background pattern
 	function createBackground () {
-		alert('createbackground');
-		if (Modernizr.canvas) { alert('no canvas');return; }
+		if (!Modernizr.canvas) { return; }
 		var canvas = document.createElement("canvas"),
 			ctx = canvas.getContext("2d"),
 			background = $("#game .background")[0],

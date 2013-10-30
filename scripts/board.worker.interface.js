@@ -6,6 +6,7 @@ swapGame.board = (function () {
 		callbacks;
 		
 	function initialise(callback) {
+		alert("board.worker.interface");
 		settings = swapGame.settings;
 		rows = settings.rows;
 		cols = settings.cols;

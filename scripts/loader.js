@@ -63,9 +63,7 @@ window.addEventListener("load", function () {
 			load: [
 				"scripts/sizzle.js",
 				"scripts/dom.js",
-				"scripts/game.js",
-				"scripts/screen.splash.js",
-				"scripts/screen.main-menu.js"
+				"scripts/game.js"
 			]
 		}, {
 			test: Modernizr.standalone,
@@ -88,18 +86,24 @@ window.addEventListener("load", function () {
 	if (Modernizr.standalone) {
 		Modernizr.load([
 		{
-			load: [
-				"loader!scripts/screen.main-menu.js",
-				"loader!scripts/display.canvas.js",
-				"loader!images/blocks" + swapGame.settings.blockSize + ".png"
-			]
-		}, {
-			test: Modernizr.webworkers,
-			yep: [
-				"scripts/board.worker.interface.js",
+			test : Modernizr.canvas,
+			yep : "loader!scripts/display.canvas.js",
+			nope: "loader!scripts/display.dom.js"
+		},{
+			test : Modernizr.webworkers,
+			yep : [
+				"loader!scripts/board.worker.interface.js",
 				"preload!scripts/board.worker.js"
 			],
-			nope: "loader!scripts/board.js"
+			nope : "loader!scripts/board.js"
+		}, {
+			load : [
+			"loader!scripts/display.canvas.js",
+            "loader!scripts/screen.main-menu.js",
+            "loader!scripts/screen.game.js",
+            "loader!images/blocks"
+                + swapGame.settings.blockSize + ".png"
+			]
 		}
 		]);
 	}

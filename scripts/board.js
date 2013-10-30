@@ -1,5 +1,4 @@
 swapGame.board = (function () {
-	console.log("this is board");
 	var settings,
 		blocks, // two-dimensional array presenting the block in each location on the board
 		cols,
