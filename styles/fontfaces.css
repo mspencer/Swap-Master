@@ -1,4 +1,18 @@
 @font-face {
+	font-family:"Muli";
+	font-weight:normal;
+	font-style:normal;
+	src:url("../fonts/Muli-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family:"Montaga";
+	font-weight:normal;
+	font-style:normal;
+	src:url("../fonts/Montaga-Regular.ttf") format("truetype");
+}
+
+@font-face {
 	font-family:"Snowburstone";
 	font-weight:normal;
 	font-style:normal;

@@ -14,7 +14,7 @@ body  {
 	width:8em;
 	height:12em;
 	background-color:rgb(30,30,30);
-	font-family:Geo;
+	font-family:Montaga;
 	color:rgb(200,200,100);
 }
 
@@ -56,7 +56,7 @@ body  {
 }
 
 .logo {
-	font-family:Snowburstone;
+	font-family:Muli;
 	font-size:1.5em;
 	line-height:1em;
 	margin:0 0 0.5em 0;
@@ -115,7 +115,7 @@ ul.menu li {
 }
 
 ul.menu li button {
-	font-family:Snowburstone, sans-serif;
+	font-family:Muli, sans-serif;
 	font-size:0.6em;
 	color:rgb(100,120,0);
 	width:10em;
