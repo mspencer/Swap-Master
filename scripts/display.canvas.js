@@ -32,25 +32,25 @@
 		callback();
 	}
 	
-	function createBackground () {
+	function createBackground() {
 		var background = document.createElement("canvas"),
-			bgctx = canvas.getContext("2d");
+			bgctx = background.getContext("2d");
 			
 		dom.addClass(background, "background");
-		background.width = cols * blockSize;
-		background.height = rows * blockSize;
+        background.width = cols * blockSize;
+        background.height = rows * blockSize;
 		
-		bgctx.fillStyle = "rgba(225,235,255,0.15)";
+		bgctx.fillStyle = "rgba(225,235,255,0.3)";
 		for (var x = 0; x < cols; x++) {
-			for (var y = 0; y < rows; y++) {
-				if ((x+y) % 2) {
-					bgctx.fillRect(
-						x * blockSize, y * blockSize,
-						blockSize, blockSize
-					);
-				}
-			}
-		}
+            for (var y = 0; y < cols; y++) {
+                if ((x+y) % 2) {
+                    bgctx.fillRect(
+                        x * blockSize, y * blockSize,
+                        blockSize, blockSize
+                    );
+                }
+            }
+        }
 		
 		return background;
 	}

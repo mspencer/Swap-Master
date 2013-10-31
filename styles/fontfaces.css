@@ -1,4 +1,11 @@
 @font-face {
+	font-family:"Snowburstone";
+	font-weight:normal;
+	font-style:normal;
+	src:url("../fonts/SnowburstOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
 	font-family:"Slackey";
 	font-weight:normal;
 	font-style:normal;

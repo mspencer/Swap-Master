@@ -163,7 +163,7 @@ swapGame.board = (function () {
 				data:score
 			}, {
 				type:"move",
-				data:move
+				data:moved
 			});
 			// refill if no more moves
 			if (!hasMoves()) {
@@ -212,7 +212,7 @@ swapGame.board = (function () {
 			
 		if (canSwap(x1,y1,x2,y2)) {
 			// swap the blocks
-			tmp = Block(x1,y1);
+			tmp = getBlock(x1,y1);
 			blocks[x1][y1] = getBlock(x2,y2);
 			blocks[x2][y2] = tmp;
 			// check the board and get list of events
@@ -238,6 +238,7 @@ swapGame.board = (function () {
 		var str = "";
 		for (var y = 0; y < rows; y++) {
 			for (var x = 0; x < cols; x++) {
+				str += "[" + x + "]" + "[" + y + "]";
 				str += getBlock(x,y) + " ";
 			}
 			str += "\r\n";
