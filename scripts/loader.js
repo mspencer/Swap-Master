@@ -6,7 +6,18 @@ var swapGame = {
 		baseScore:100,
 		numBlockTypes:7
 	},
-	images: {}
+	images: {
+	},
+	controls: {
+		KEY_UP:"moveUp",
+		KEY_DOWN:"moveDown",
+		KEY_LEFT:"moveLeft",
+		KEY_RIGHT:"moveRight",
+		KEY_ENTER:"selectBlock",
+		KEY_SPACE:"selectBlock",
+		CLICK:"selectBlock",
+		TOUCH:"selectBlock"
+	}
 };
 
 // wait until main document is loaded
