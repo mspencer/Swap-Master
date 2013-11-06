@@ -1,10 +1,10 @@
-swapGame.input = (function () 
+swapGame.input = (function () {
 	var keys = {
 		37: "KEY_LEFT",38: "KEY_UP",39: "KEY_RIGHT",40: "KEY_DOWN",13: "KEY_ENTER",32: "KEY_SPACE",
 		65: "KEY_A", 66: "KEY_B", 67: "KEY_C", 68: "KEY_D", 69: "KEY_E", 70: "KEY_F", 71: "KEY_G", 
 		72: "KEY_H", 73: "KEY_I", 74: "KEY_J", 75: "KEY_K", 76: "KEY_L", 77: "KEY_M", 78: "KEY_N", 
 		79: "KEY_O", 80: "KEY_P", 81: "KEY_Q", 82: "KEY_R", 83: "KEY_S", 84: "KEY_T", 85: "KEY_U", 
-		86: "KEY_V", 87: "KEY_W", 88: "KEY_X", 89: "KEY_Y", 90"KEY_Z", 
+		86: "KEY_V", 87: "KEY_W", 88: "KEY_X", 89: "KEY_Y", 90: "KEY_Z"
 	};
 
 	var dom = swapGame.dom,
@@ -61,14 +61,25 @@ swapGame.input = (function ()
 	}
 	
 	function bind (action, handler) {
-		// bind a handler function to a game action
+		if (!inputHandlers[action]) {
+			inputHandlers[action] = [];
+		}
+		inputHandlers[action].push(handler);
 	}
 	
 	function trigger (action) {
-		// trigger a game action
+		var handlers = inputHandlers[action],
+			args = Array.prototype.slice.call(arguments, 1);
+		
+		if (handlers) {
+			for (var i = 0; i < handlers.length; i++) {
+				handlers[i].apply(null, args);
+			}
+		}
 	}
 	
 	return {
-		initialise: initialise
+		initialise: initialise,
+		bind: bind
 	}
 })();

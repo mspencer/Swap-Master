@@ -4,19 +4,19 @@ var swapGame = {
 		rows:8,
 		cols:8,
 		baseScore:100,
-		numBlockTypes:7
+		numBlockTypes:7,
+		controls: {
+			KEY_UP:"moveUp",
+			KEY_DOWN:"moveDown",
+			KEY_LEFT:"moveLeft",
+			KEY_RIGHT:"moveRight",
+			KEY_ENTER:"selectBlock",
+			KEY_SPACE:"selectBlock",
+			CLICK:"selectBlock",
+			TOUCH:"selectBlock"
+		}
 	},
 	images: {
-	},
-	controls: {
-		KEY_UP:"moveUp",
-		KEY_DOWN:"moveDown",
-		KEY_LEFT:"moveLeft",
-		KEY_RIGHT:"moveRight",
-		KEY_ENTER:"selectBlock",
-		KEY_SPACE:"selectBlock",
-		CLICK:"selectBlock",
-		TOUCH:"selectBlock"
 	}
 };
 
@@ -109,6 +109,7 @@ window.addEventListener("load", function () {
 			nope : "loader!scripts/board.js"
 		}, {
 			load : [
+			"loader!scripts/input.js",
 			"loader!scripts/display.canvas.js",
             "loader!scripts/screen.main-menu.js",
             "loader!scripts/screen.game.js",
