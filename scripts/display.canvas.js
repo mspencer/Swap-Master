@@ -5,7 +5,8 @@
 		cols, rows,
 		blockSize,
 		firstRun = true,
-		blocks;
+		blocks,
+		cursor;
 		
 	function setup () {
 		var boardElement = $("#game-screen .game-board")[0];
@@ -77,8 +78,36 @@
 		callback();
 	}
 	
+	function clearCursor () {
+		if (cursor) {
+			var x = cursor.x,
+				y = cursor.y;
+			clearBlock(x, y);
+			drawBlock(blocks[x][y], x, y);
+		}
+	}
+	
+	function setCursor (x, y, selected) {
+		clearCursor();
+		if (arguments.length > 0) {
+			cursor = {
+				x: x,
+				y: y,
+				selected: selected
+			};
+		} else {
+			cursor = null;
+		}
+		renderCursor();
+	}
+	
+	function clearBlock (x, y) {
+		ctx.clearRect(x * blockSize, y * blockSize, blockSize, blockSize);
+	}
+	
 	return {
 		initialise:initialise,
-		redraw:redraw
+		redraw:redraw,
+		setCursor:setCursor
 	}
  })();
