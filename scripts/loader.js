@@ -16,8 +16,7 @@ var swapGame = {
 			TOUCH:"selectBlock"
 		}
 	},
-	images: {
-	}
+	images:{}
 };
 
 // wait until main document is loaded
@@ -74,6 +73,7 @@ window.addEventListener("load", function () {
 			load: [
 				"scripts/sizzle.js",
 				"scripts/dom.js",
+				"scripts/requestAnimationFrame.js",
 				"scripts/game.js"
 			]
 		}, {

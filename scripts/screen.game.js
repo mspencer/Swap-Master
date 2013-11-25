@@ -39,6 +39,7 @@ swapGame.screens["game-screen"] = (function() {
 		cursor.x = x;
 		cursor.y = y;
 		cursor.selected = select;
+		display.setCursor(x, y, select);
 	}
 	
 	function selectBlock (x, y) {

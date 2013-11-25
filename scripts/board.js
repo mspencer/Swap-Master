@@ -208,19 +208,49 @@ swapGame.board = (function () {
 	
 	function swap (x1,y1,x2,y2,callback) {
 		var tmp, 
+			swap1, swap2,
 			events;
-			
-		if (canSwap(x1,y1,x2,y2)) {
-			// swap the blocks
-			tmp = getBlock(x1,y1);
-			blocks[x1][y1] = getBlock(x2,y2);
-			blocks[x2][y2] = tmp;
-			// check the board and get list of events
-			events = check();
-			
+		
+		swap1 = {
+			type: "move",
+			data: [{
+				type: getBlock(x1,y1),
+				fromX: x1, fromY: y1,
+				toX: x2, toY: y2
+			}, {
+				type: getBlock(x2,y2),
+				fromX: x2, fromY: y2,
+				toX: x1, toY: y1
+			}]
+		};
+		
+		swap2 = {
+			type: "move",
+			data: [{
+				type: getBlock(x2,y2),
+				fromX: x1, fromY: y1,
+				toX: x2, toY: y2
+			}, {
+				type: getBlock(x1,y1),
+				fromX: x2, fromY: y2,
+				toX: x1, toY: y1
+			}]
+		};
+		
+		if (isAdjacent(x1, y1, x2, y2)) {
+			events.push(swap1);
+		
+			if (canSwap(x1,y1,x2,y2)) {
+				// swap the blocks
+				tmp = getBlock(x1,y1);
+				blocks[x1][y1] = getBlock(x2,y2);
+				blocks[x2][y2] = tmp;
+				// check the board and get list of events
+				events = events.concat(check());
+			} else {
+				events.push(swap2, {type: "badswap"});
+			}
 			callback(events);
-		} else {
-			callback(false);
 		}
 	}
 	
