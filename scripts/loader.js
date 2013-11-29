@@ -14,7 +14,9 @@ var swapGame = {
 			KEY_SPACE:"selectBlock",
 			CLICK:"selectBlock",
 			TOUCH:"selectBlock"
-		}
+		},
+		baseLevelTimer: 6000,
+		baseLevelExp: 1.05
 	},
 	images:{}
 };

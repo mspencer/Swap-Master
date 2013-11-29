@@ -152,6 +152,7 @@ ul.menu li button:active {
 	position:relative;
 	width:8em;
 	height:8em;
+	-webkit-perspective:16em;
 }
 
 #game-screen .game-board .board-bg,
@@ -202,4 +203,133 @@ ul.menu li button:active {
 	width:1em;
 	height:1em;
 	background-color:rgba(225,235,255,0.15);
+}
+
+/* Game Screen - Game State */
+#game-screen .game-info {
+	width:100%;
+	float:left;
+}
+
+#game-screen .game-info label {
+	display:inline-block;
+	height:1.5em;
+	float:left;
+	font-size:0.6em;
+	padding:0.25em;
+}
+
+#game-screen .game-info .score {
+	float:right;
+}
+
+#game-screen .time {
+	height:0.25em;
+	border-radius:0.5em;
+}
+
+#game-screen .time .indicator {
+	width:100%;
+}
+
+@media (orientation: landscape) {
+	#game-screen .game-board {
+		float:left;
+	}
+	
+	#game-screen .game-info {
+		width:auto;
+		height:2em;
+		white-space:nowrap;
+	}
+	
+	#game-screen .game-info label {
+		font-size:0.5em;
+	}
+	
+	#game-screen .game-info .score {
+		float:left;
+		clear:both;
+	}
+	
+	#game-screen .time {
+		font-size:0.5em;
+		margin:0;
+		float:left;
+		width:6.5em;
+		-webkit-transform:rotate(-90deg) translate(-3em, -1.75em);
+		-moz-transform:rotate(-90deg) translate(-3em, -1.75em);
+		-ms-transform:rotate(-90deg) translate(-3em, -1.75em);
+		transform:rotate(-90deg) translate(-3em, -1.75em);
+	}
+}
+
+/* Game screen - announcement */
+#game-screen .announcement {
+	position:absolute;
+	left:0;
+	top:50%;
+	margin-top:-0.5em;
+	width:100%;
+	font-family:Montaga;
+	color:rgb(150,150,75);
+	text-shadow:0.03em 0.03em 0.03em rgb(255,255,0),
+				-0.03em -0.03em 0.03em rgb(255,255,0),
+				0.1em 0.15em 0.15em rgb(0,0,0);
+	text-align:center;
+	white-space:nowrap;
+	z-index:20;
+	opacity:0;
+	cursor:default;
+}
+
+.no-textshadow #game-screen .announcement {
+	filter:glow(color=#ffff00,strength=1), dropshadow(color=#000000,offX=3,offY=3);
+}
+
+/* Announcement animation */
+/* Keyframe for webkit */
+@-webkit-keyframes zoomfade {
+	0% {
+		opacity:1;
+		-webkit-transform:scale(0.5);
+	}
+	25% {
+		opacity:1;
+	}
+	100% {
+		opacity:0;
+		-webkit-transform:scale(1.5);
+	}
+}
+/* Keyframe for webkit */
+@-moz-keyframes zoomfade {
+	0% {
+		opacity:1;
+		-moz-transform:scale(0.5);
+	}
+	25% {
+		opacity:1;
+	}
+	100% {
+		opacity:0;
+		-moz-transform:scale(1.5);
+	}
+}
+/* zoomfade animation class */
+.zoomfade {
+	-webkit-animation-name:zoomfade;
+	-webkit-animation-duration:2s;
+	-moz-animation-name:zoomfade;
+	-moz-animation-duration:2s;
+}
+
+/* Fallback for browsers without CSS animations */
+.no-cssanimations #game-screen .announcement {
+	display:none;
+}
+
+.no-cssanimations #game-screen .announcement.active {
+	opacity:1;
+	display:block;
 }

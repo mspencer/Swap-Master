@@ -69,13 +69,25 @@
 		return background;
 	}
 	
-	function drawBlock (type, x, y) {
+	function drawBlock (type, x, y, scale, rot) {
 		var image = swapGame.images["images/blocks" + blockSize + ".png"];
 		
-		ctx.drawImage(image, 
-			type * blockSize, 0, blockSize, blockSize,
+		ctx.save();
+		if (typeof scale != "undefined" && scale > ) {
+			ctx.beginPath();
+			ctx.rect(x,y,1,1);
+			ctx.clip();
+			ctx.translate(x + 0.5, y + 0.5);
+			ctx.scale(scale, scale);
+			if (rot) {
+				ctx.rotate(rot);
+			}
+			ctx.translate(-x - 0.5, -y - 0.5);
+		}
+		ctx.drawImage(image, type * blockSize, 0, blockSize, blockSize,
 			x, y, 1, 1
 		);
+		ctx.restore();
 	}
 	
 	function redraw (newBlocks, callback) {
@@ -181,10 +193,27 @@
 	function removeBlocks (removedBlocks, callback) {
 		var n = removedBlocks.length;
 		
-		for (var i = 0; i < n; i++) {
-			clearBlock(removedBlocks[i].x, removedBlocks[i].y);
-		}
-		callback();
+		removedBlocks.forEach(function(e) {
+			addAnimation(400, {
+				before: function() {
+					clearBlock(e.x, e.y);
+				},
+				render: function(pos) {
+					ctx.save();
+					ctx.globalAlpha = 1 - pos;
+					drawBlock(
+						e.type, e.x, e.y,
+						1 - pos, pos * Math.PI * 2
+					);
+					ctx.restore();
+				},
+				done: function() {
+					if (--n == 0) {
+						callback();
+					}
+				}
+			});
+		});
 	}
 	
 	function addAnimation (runTime, fncs) {
@@ -231,12 +260,63 @@
 		}
 	}
 	
+	function refill (newBlocks, callback) {
+		var lastBlock = 0;
+		addAnimation(1000, {
+			render: function(pos) {
+				var thisBlock = Math.floor(pos * cols * rows),
+					i, x, y;
+				for (i = lastBlock; i < thisBlock; i++) {
+					x = i % cols;
+					y = Math.floor(i / cols);
+					clearBlock(x, y);
+					drawBlock(newBlocks[x][y], x, y);
+				}
+				lastBlock = thisBlock;
+				canvas.style.webkitTransform = "rotateX(" + (360 * pos) + "deg)";
+			},
+			done: function() {
+				canvas.style.webkitTransform = "";
+				callback();
+			}
+		});
+	}
+	
+	function levelUp (callback) {
+		addAnimation(1000, {
+			before: function(pos) {
+				var j = Math.floor(pos * rows * 2),
+					x, y;
+				for (y = 0, x = j; y < rows; y++, x--) {
+					if (x >= 0 && x < cols) {
+						clearBlock(x,y);
+						drawBlock(blocks[x][y], x, y);
+					}
+				}
+			},
+			render: function(pos) {
+				var j = Math.floor(pos * rows * 2),
+					x, y;
+				ctx.save();
+				ctx.globalCompositeOperation = "lighter";
+				for (y = 0, x = j; y < rows; y++, x--) {
+					if (x >= 0 && x < cols) {
+						drawBlock(blocks[x][y], x, y, 1.1);
+					}
+				}
+				ctx.restore();
+			},
+			done: callback
+		});
+	}
+	
 	return {
 		initialise:initialise,
 		redraw:redraw,
 		setCursor:setCursor,
 		moveBlocks: moveBlocks,
 		removeBlocks: removeBlocks,
-		refill: redraw
+		refill: refill,
+		levelUp: levelUp
 	}
  })();

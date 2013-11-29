@@ -1,0 +1,44 @@
+<html>
+<head>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	
+	<script src="jquery-1.10.2.min.js"></script>
+	<script src="main.js"></script>
+	<script>
+	jQuery( document ).ready(function( $ ) {
+		// Code using $ as usual goes here.
+		calculator.mainjs.bindButton(".single-button, .double-button", "click");
+	});
+	</script>
+</head>
+<body>
+<div id="calculator">
+	<div id="output"></div>
+	<div id="input">
+		<div class="row">
+			<div id="1" class="single-button">1</div>
+			<div id="2" class="single-button">2</div>
+			<div id="3" class="single-button">3</div>
+			<div id="clearAll" class="single-button">CE</div>
+		</div>
+		<div class="row">
+			<div id="4" class="single-button">4</div>
+			<div id="5" class="single-button">5</div>
+			<div id="6" class="single-button">6</div>
+			<div id="clearLast" class="single-button">C</div>
+		</div>
+		<div class="row">
+			<div id="7" class="single-button">7</div>
+			<div id="8" class="single-button">8</div>
+			<div id="9" class="single-button">9</div>
+			<div id="equal" class="double-button">=</div>
+		</div>
+		<div class="row">
+			<div id="add" class="single-button">+</div>
+			<div id="0" class="single-button">0</div>
+			<div id="subtract" class="single-button">-</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

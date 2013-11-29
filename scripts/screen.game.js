@@ -4,26 +4,17 @@ swapGame.screens["game-screen"] = (function() {
 		input = swapGame.input,
 		settings = swapGame.settings,
 		cursor,
-		firstRun = true;
+		firstRun = true,
+		gameState = {},
+		dom = swapMaster.dom,
+		$ = dom.$;
 
     function run() {
 		if (firstRun) {
 			setup();
 			firstRun = false;
 		}
-		
-        board.initialise(function() {
-            display.initialise(function() {
-				cursor = {
-					x:0,
-					y:0,
-					selected:false
-				};
-                display.redraw(board.getBoard(), function() {
-                    // do nothing for now
-                });
-            });
-        });
+		startGame();
     }
 	
 	function setup () {
@@ -33,6 +24,89 @@ swapGame.screens["game-screen"] = (function() {
 		input.bind("moveDown", moveDown);
 		input.bind("moveLeft", moveLeft);
 		input.bind("moveRight", moveRight);
+	}
+	
+	function startGame () {
+		gameState = {
+			level: 0,
+			score: 0,
+			timer: 0, // setTimeout reference
+			startTime: 0, // time at start of level
+			endTime: 0 // time to game over
+		};
+		cursor = {
+			x: 0,
+			y: 0,
+			selected: false
+		};
+		updateGameInfo();
+		board.initialise(function () {
+			display.initialise(function () {
+				display.redraw(board.getBoard(), function() {
+					advanceLevel();
+				});
+			});
+		});
+	}
+	
+	function updateGameInfo () {
+		$("#game-screen .score span")[0].innerHTML = gameState.score;
+		$("#game-screen .level span")[0].innerHTML = gameState.level;
+	}
+	
+	function setLevelTimer (reset) {
+		if (gameState.timer) {
+			clearTimeout(gameState.timer);
+			gameState.timer = 0;
+		}
+		if (reset) {
+			gameState.startTime = Date.now();
+			gameState.endTime = settings.baseLevelTimer * Math.pow(gameState.level, -0.05 * gameState.level);
+		}
+		var delta = gameState.startTime + gameState.endTime - Date.now(),
+			percent = (delta / gameState.endTime) * 100;
+			progress = $("#game-screen .time.indicator")[0];
+		if (delta < 0) {
+			gameOver();
+		} else {
+			progress.style.width = percent + "%";
+			gameState.timer = setTimeout(setLevelTimer, 30);
+		}
+	}
+	
+	function addScore(points) {
+		var nextLevelAt = Math.pow(settings.baseLevelScore, Math.pow(settings.baseLevelExp, gameState.level-1));
+		gameState.score += points;
+		if (gameState.score >= nextLevelAt) {
+			advanceLevel();
+		}
+		updateGameInfo();
+	}
+	
+	function advanceLevel () {
+		gameState.level++;
+		announce("Level " + gameState.level);
+		updateGameInfo();
+		gameState.startTime = Date.now();
+		gameState.endTime = settings.baseLevelTimer * Math.pow(gameState.level, -0.05 * gameState.level);
+		setLevelTimer(true);
+		display.levelUp();
+	}
+	
+	function announce (str) {
+		var element = $("#game-screen .announcement")[0];
+		element.innerHTML = str;
+		if (Modernizr.cssanimations) {
+			dom.removeClass(element, "zoomfade");
+			setTimeout(function() {
+				dom.addClass(element, "zoomfade");
+			}, 1);
+		} else {
+			dom.addClass(element, "active");
+			setTimeout(function() {
+				dom.removeClass(element, "active");
+			}, 1000);
+		}
 	}
 	
 	function setCursor (x, y, select) {
@@ -82,7 +156,12 @@ swapGame.screens["game-screen"] = (function() {
 					display.removeBlocks(boardEvent.data, next);
 					break;
 				case "refill" :
+					announce("No moves!");
 					display.refill(boardEvent.data, next);
+					break;
+				case "score" :
+					addScore(boardEvent.data);
+					next();
 					break;
 				default :
 					next();
