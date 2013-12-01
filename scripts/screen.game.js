@@ -109,6 +109,12 @@ swapGame.screens["game-screen"] = (function() {
 		}
 	}
 	
+	function gameOver () {
+		display.gameOver(function () {
+			announce("Game over");
+		});
+	}
+	
 	function setCursor (x, y, select) {
 		cursor.x = x;
 		cursor.y = y;
