@@ -6,7 +6,7 @@ swapGame.screens["game-screen"] = (function() {
 		cursor,
 		firstRun = true,
 		gameState = {},
-		dom = swapMaster.dom,
+		dom = swapGame.dom,
 		$ = dom.$;
 
     function run() {
@@ -64,13 +64,15 @@ swapGame.screens["game-screen"] = (function() {
 			gameState.endTime = settings.baseLevelTimer * Math.pow(gameState.level, -0.05 * gameState.level);
 		}
 		var delta = gameState.startTime + gameState.endTime - Date.now(),
-			percent = (delta / gameState.endTime) * 100;
-			progress = $("#game-screen .time.indicator")[0];
+			percent = (delta / gameState.endTime) * 100,
+			progress = $("#game-screen .time .indicator")[0];
 		if (delta < 0) {
 			gameOver();
 		} else {
 			progress.style.width = percent + "%";
-			gameState.timer = setTimeout(setLevelTimer, 30);
+			gameState.timer = setTimeout(function() {
+				setLevelTimer(false);
+			}, 30);
 		}
 	}
 	
@@ -138,6 +140,7 @@ swapGame.screens["game-screen"] = (function() {
 			} else if (dist == 1) {
 				// select and adjacent block
 				board.swap(cursor.x, cursor.y, x, y, playBoardEvents);
+				setCursor(x, y, false);
 			} else {
 				// select a different block
 				setCursor(x, y, true);
@@ -184,7 +187,7 @@ swapGame.screens["game-screen"] = (function() {
 		if (cursor.selected) {
 			x += cursor.x;
 			y += cursor.y;
-			if (x >= 0 && x <= settings.cols && y >= 0 && y <= settings.rows) {
+			if (x >= 0 && x < settings.cols && y >= 0 && y < settings.rows) {
 				selectBlock(x, y);
 			}
 		} else {

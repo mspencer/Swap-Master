@@ -24,14 +24,15 @@
 		canvas.height = rows * blockSize;
 		ctx.scale(blockSize, blockSize);
 		
-		boardElement.appendChild(createBackground());
 		boardElement.appendChild(canvas);
-		
+		boardElement.appendChild(createBackground());
+				
 		previousCycle = Date.now();
 		requestAnimationFrame(cycle);
 	}
 	
-	function cycle (time) {
+	function cycle () {
+		var time = Date.now();
 		renderCursor(time);
 		renderAnimations(time, previousCycle);
 		previousCycle = time;
@@ -73,7 +74,7 @@
 		var image = swapGame.images["images/blocks" + blockSize + ".png"];
 		
 		ctx.save();
-		if (typeof scale != "undefined" && scale > ) {
+		if (typeof scale != "undefined" && scale > 0) {
 			ctx.beginPath();
 			ctx.rect(x,y,1,1);
 			ctx.clip();
@@ -100,6 +101,7 @@
 			}
 		}
 		callback();
+		renderCursor();
 	}
 	
 	function clearCursor () {
@@ -124,7 +126,33 @@
 		}
 	}
 	
-	function renderCursor () {
+	function renderCursor() {
+        if (!cursor) {
+            return;
+        }
+        var x = cursor.x,
+            y = cursor.y;
+
+        clearCursor();
+
+        if (cursor.selected) {
+            ctx.save();
+            ctx.globalCompositeOperation = "lighter";
+            ctx.globalAlpha = 0.8;
+            drawBlock(blocks[x][y], x, y);
+            ctx.restore();
+        }
+        ctx.save();
+        ctx.lineWidth = 0.05 * blockSize;
+        ctx.strokeStyle = "rgba(250,250,150,0.8)";
+        ctx.strokeRect(
+            (x + 0.05) * blockSize, (y + 0.05) * blockSize,
+            0.9 * blockSize, 0.9 * blockSize
+        );
+        ctx.restore();
+    }
+	
+	function renderCursor (time) {
 		if (!cursor) {
 			return;
 		}
@@ -144,7 +172,7 @@
 		}
 		ctx.save();
 		ctx.lineWidth = 0.05 * blockSize;
-		ctx.strokeStyle = "rgba(250,250,150" + (0.5 + 0.5 * t2) + ")";
+		ctx.strokeStyle = "rgba(250,250,150," + (0.5 + 0.5 * t2) + ")";
 		ctx.strokeRect(
 			(x + 0.05) * blockSize, (y + 0.05) * blockSize,
 			0.9 * blockSize, 0.9 * blockSize
@@ -252,7 +280,7 @@
 			anim.fncs.render(anim.pos, anim.pos - anim.lastPos);
 			if (anim.pos == 1) {
 				if (anim.fncs.done) {
-					anim.fncs.done(();
+					anim.fncs.done();
 				}
 			} else {
 				animations.push(anim);
@@ -360,7 +388,7 @@
 	function explodePieces (pieces, pos, delta) {
 		var piece, i;
 		for (i = 0; i < pieces.length; i++) {
-			piece = piece[i];
+			piece = pieces[i];
 			
 			piece.vel.y += 50 * delta;
 			piece.pos.y += piece.vel.y * delta;

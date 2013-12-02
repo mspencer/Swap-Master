@@ -7,7 +7,8 @@ swapGame.board = (function () {
 		numBlockTypes;
 		
 	function fillBoard () {
-		var x,y;
+		var x,y,
+			type;
 		blocks = [];
 		for (x = 0; x < cols; x++) {
 			blocks[x] = [];
@@ -209,7 +210,7 @@ swapGame.board = (function () {
 	function swap (x1,y1,x2,y2,callback) {
 		var tmp, 
 			swap1, swap2,
-			events;
+			events = [];
 		
 		swap1 = {
 			type: "move",
