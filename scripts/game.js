@@ -73,5 +73,5 @@ swapGame.game = (function () {
 	return {
 		showScreen:showScreen,
 		setup:setup
-	}
+	};
 })();

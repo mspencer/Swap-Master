@@ -54,7 +54,7 @@ swapGame.display = (function() {
         boardElement.appendChild(createBackground());
     }
 
-    function initialize (callback) {
+    function initialise (callback) {
         if (firstRun) {
             setup();
             firstRun = false;
@@ -79,7 +79,7 @@ swapGame.display = (function() {
     }
 
     return {
-        initialize : initialize,
+        initialise : initialise,
         redraw : redraw
     };
 })();

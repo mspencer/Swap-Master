@@ -6,7 +6,7 @@ swapGame.board = (function () {
 		callbacks;
 		
 	function initialise(callback) {
-		alert("board.worker.interface");
+		console.log("board.worker.interface-js");
 		settings = swapGame.settings;
 		rows = settings.rows;
 		cols = settings.cols;
@@ -84,5 +84,5 @@ swapGame.board = (function () {
 		swap: swap,
 		getBoard: getBoard,
 		print: print
-	}
+	};
 })();

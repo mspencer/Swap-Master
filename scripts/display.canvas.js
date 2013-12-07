@@ -124,6 +124,7 @@
 		} else {
 			cursor = null;
 		}
+		renderCursor();
 	}
 	
 	function renderCursor() {
@@ -171,12 +172,9 @@
 			ctx.restore();
 		}
 		ctx.save();
-		ctx.lineWidth = 0.05 * blockSize;
+		ctx.lineWidth = 0.05;
 		ctx.strokeStyle = "rgba(250,250,150," + (0.5 + 0.5 * t2) + ")";
-		ctx.strokeRect(
-			(x + 0.05) * blockSize, (y + 0.05) * blockSize,
-			0.9 * blockSize, 0.9 * blockSize
-		);
+		ctx.strokeRect(x + 0.05, y + 0.05, 0.9, 0.9);
 		ctx.restore();
 	}
 	
