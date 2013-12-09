@@ -15,7 +15,8 @@ var swapGame = {
 			CLICK:"selectBlock",
 			TOUCH:"selectBlock"
 		},
-		baseLevelTimer: 6000,
+		baseLevelTimer: 60000,
+		baseLevelScore: 1500,
 		baseLevelExp: 1.05
 	},
 	images:{}
@@ -112,7 +113,7 @@ window.addEventListener("load", function () {
 		}, {
 			load : [
 			"loader!scripts/input.js",
-			"loader!scripts/display.canvas.js",
+			//"loader!scripts/display.canvas.js",
             "loader!scripts/screen.main-menu.js",
             "loader!scripts/screen.game.js",
             "loader!images/blocks"

@@ -1,13 +1,12 @@
 swapGame.screens["game-screen"] = (function() {
-    var board = swapGame.board,
+    var settings = swapGame.settings,
+    	board = swapGame.board,
         display = swapGame.display,
-		input = swapGame.input,
-		settings = swapGame.settings,
-		cursor,
-		firstRun = true,
-		gameState = {},
+		input = swapGame.input,		
 		dom = swapGame.dom,
-		$ = dom.$;
+		$ = dom.$,
+		cursor,
+		firstRun = true;
 
     function run() {
 		if (firstRun) {
