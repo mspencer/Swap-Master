@@ -106,7 +106,7 @@ window.addEventListener("load", function () {
 		},{
 			test : Modernizr.webworkers,
 			yep : [
-				"loader!scripts/board.worker.interface.js",
+				"loader!scripts/board.worker-interface.js",
 				"preload!scripts/board.worker.js"
 			],
 			nope : "loader!scripts/board.js"
@@ -118,7 +118,18 @@ window.addEventListener("load", function () {
             "loader!scripts/screen.game.js",
             "loader!images/blocks"
                 + swapGame.settings.blockSize + ".png"
-			]
+			],
+			callback: {
+				"input.js": function() {
+					console.log("input.js loaded");
+				},
+				"screen.main-menu.js": function() {
+					console.log("screen.main-menu.js loaded");
+				},
+				"screen.game.js": function() {
+					console.log("screen.game.js loaded");
+				}
+			}
 		}
 		]);
 	}

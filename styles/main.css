@@ -14,8 +14,8 @@ body  {
 	width:8em;
 	height:12em;
 	background-color:rgb(30,30,30);
-	font-family:Montaga;
-	color:rgb(200,200,100);
+	font-family:OpenSans, sans-serif;
+	color:#ffbf00;
 }
 
 #game .background {
@@ -56,15 +56,15 @@ body  {
 }
 
 .logo {
-	font-family:Muli;
+	font-family:OpenSansBold;
 	font-size:1.5em;
 	line-height:1em;
 	margin:0 0 0.5em 0;
 	text-align:center;
-	color:rgb(70,120,20);
-	text-shadow:0.03em 0.03em 0.06em rgb(255,255,0),
-				-0.03em -0.03em 0.06em rgb(255,255,0),
-				0.1em 0.15em 0.15em rgb(0,0,0);
+	color:#FF4000;
+	text-shadow:0.03em 0.03em 0.06em rgba(255,255,255,0.3),
+				-0.03em -0.03em 0.06em rgba(255,255,255,0.3),
+				0.1em 0.15em 0.15em rgba(0,0,0,0.3);
 }
 
 .no-textshadow .logo {
@@ -78,11 +78,11 @@ body  {
 	height:0.5em;
 	border-radius:0.5em;
 	overflow:hidden;
-	border:1px solid rgb(200,200,100);
+	border:1px solid rgba(255,255,255,0.5);
 }
 
 .progress .indicator {
-	background-color:rgb(200,200,100);
+	background-color:#ffbf00;
 	height:100%;
 	width:0%;
 }
@@ -115,13 +115,13 @@ ul.menu li {
 }
 
 ul.menu li button {
-	font-family:Muli, sans-serif;
-	font-size:0.6em;
-	color:rgb(100,120,0);
+	font-family:OpenSansBold, sans-serif;
+	font-size:0.58em;
+	color:#343434;
 	width:10em;
-	height:1.5em;
-	background:rgb(10,20,0);
-	border:0.1em solid rgb(255,255,0);
+	height:1.8em;
+	background:#ffbf00;
+	border:0.1em solid rgba(255,255,255,0.2);
 	border-radius:0.5em;
 	-webkit-box-shadow:0.2em 0.2em 0.3em rgb(0,0,0);
 	-moz-box-shadow:0.2em 0.2em 0.3em rgb(0,0,0);
@@ -129,12 +129,13 @@ ul.menu li button {
 }
 
 ul.menu li button:hover {
-	background:rgb(30,40,0);
+	background:#886A08;
+	color:#ffffff;
 }
 
 ul.menu li button:active {
-	color:rgb(255,255,0);
-	background:rgb(30,40,0);
+	color:#ffffff;
+	background:#886A08;
 }
 
 .block-size {
@@ -239,7 +240,7 @@ ul.menu li button:active {
 	top:50%;
 	margin-top:-0.5em;
 	width:100%;
-	font-family:Montaga;
+	font-family:OpenSans;
 	color:rgb(150,150,75);
 	text-shadow:0.03em 0.03em 0.03em rgb(255,255,0),
 				-0.03em -0.03em 0.03em rgb(255,255,0),

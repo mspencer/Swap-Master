@@ -1,35 +1,13 @@
 @font-face {
-	font-family:"Muli";
+	font-family:"OpenSans";
 	font-weight:normal;
 	font-style:normal;
-	src:url("../fonts/Muli-Regular.ttf") format("truetype");
+	src:url("../fonts/OpenSans-Regular.ttf") format("truetype");
 }
 
 @font-face {
-	font-family:"Montaga";
+	font-family:"OpenSansBold";
 	font-weight:normal;
 	font-style:normal;
-	src:url("../fonts/Montaga-Regular.ttf") format("truetype");
+	src:url("../fonts/OpenSans-Bold.ttf") format("truetype");
 }
-
-@font-face {
-	font-family:"Snowburstone";
-	font-weight:normal;
-	font-style:normal;
-	src:url("../fonts/SnowburstOne-Regular.ttf") format("truetype");
-}
-
-@font-face {
-	font-family:"Slackey";
-	font-weight:normal;
-	font-style:normal;
-	src:url("../fonts/slackey.woff") format("woff"),
-		url("../fonts/slackey.ttf") format("truetype");
-}
-@font-face {
-	font-family:"Geo";
-	font-weight:normal;
-	font-style:normal;
-	src:url("../fonts/geo.woff") format("woff"),
-		url("../fonts/geo.ttf") format("truetype");
-}	
