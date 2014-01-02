@@ -2,7 +2,7 @@ var swapGame = {};
 
 importScript("board.js");
 
-addEventListener("message", function (event) {
+addEventListener("message", function(event) {
 	var board = swapGame.board,
 		message = event.data;
 	

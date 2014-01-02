@@ -8,23 +8,6 @@ swapGame.screens["game-screen"] = (function() {
 		cursor,
 		firstRun = true;
 
-    function run() {
-		if (firstRun) {
-			setup();
-			firstRun = false;
-		}
-		startGame();
-    }
-	
-	function setup () {
-		input.initialise();
-		input.bind("selectBlock", selectBlock);
-		input.bind("moveUp", moveUp);
-		input.bind("moveDown", moveDown);
-		input.bind("moveLeft", moveLeft);
-		input.bind("moveRight", moveRight);
-	}
-	
 	function startGame () {
 		gameState = {
 			level: 0,
@@ -47,7 +30,24 @@ swapGame.screens["game-screen"] = (function() {
 			});
 		});
 	}
+
+    function run() {
+		if (firstRun) {
+			setup();
+			firstRun = false;
+		}
+		startGame();
+    }
 	
+	function setup () {
+		input.initialise();
+		input.bind("selectBlock", selectBlock);
+		input.bind("moveUp", moveUp);
+		input.bind("moveDown", moveDown);
+		input.bind("moveLeft", moveLeft);
+		input.bind("moveRight", moveRight);
+	}
+		
 	function updateGameInfo () {
 		$("#game-screen .score span")[0].innerHTML = gameState.score;
 		$("#game-screen .level span")[0].innerHTML = gameState.level;

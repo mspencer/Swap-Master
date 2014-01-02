@@ -50,6 +50,7 @@ window.addEventListener("load", function () {
 		
 		numPreload++;
 		resource.autoCallback = function(e) {
+
 			// console.log("Finished loading: " + resource.url);
 			numLoad++;
 			if (isImage) {
@@ -63,10 +64,10 @@ window.addEventListener("load", function () {
 	
 	function getLoadProgress () {
 		if (numPreload > 0) {
-			return numLoad/numPreload;
-		} else {
-			return 0;
-		}
+	        return numLoad/numPreload;
+	    } else {
+	        return 0;
+	    }
 	}
 	
 	// loading stage 1
@@ -100,36 +101,25 @@ window.addEventListener("load", function () {
 	if (Modernizr.standalone) {
 		Modernizr.load([
 		{
-			test : Modernizr.canvas,
-			yep : "loader!scripts/display.canvas.js",
-			nope: "loader!scripts/display.dom.js"
-		},{
+	        test : Modernizr.canvas,
+	        yep : "loader!scripts/display.canvas.js",
+	        nope : "loader!scripts/display.dom.js"
+	    }, /*{
 			test : Modernizr.webworkers,
 			yep : [
 				"loader!scripts/board.worker-interface.js",
 				"preload!scripts/board.worker.js"
 			],
 			nope : "loader!scripts/board.js"
-		}, {
+		},*/ {
 			load : [
+			"loader!scripts/board.js",
 			"loader!scripts/input.js",
-			//"loader!scripts/display.canvas.js",
             "loader!scripts/screen.main-menu.js",
             "loader!scripts/screen.game.js",
             "loader!images/blocks"
                 + swapGame.settings.blockSize + ".png"
-			],
-			callback: {
-				"input.js": function() {
-					console.log("input.js loaded");
-				},
-				"screen.main-menu.js": function() {
-					console.log("screen.main-menu.js loaded");
-				},
-				"screen.game.js": function() {
-					console.log("screen.game.js loaded");
-				}
-			}
+			]
 		}
 		]);
 	}
