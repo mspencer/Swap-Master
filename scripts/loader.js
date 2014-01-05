@@ -104,14 +104,14 @@ window.addEventListener("load", function () {
 	        test : Modernizr.canvas,
 	        yep : "loader!scripts/display.canvas.js",
 	        nope : "loader!scripts/display.dom.js"
-	    }, /*{
+	    }, {
 			test : Modernizr.webworkers,
 			yep : [
 				"loader!scripts/board.worker-interface.js",
 				"preload!scripts/board.worker.js"
 			],
 			nope : "loader!scripts/board.js"
-		},*/ {
+		}, {
 			load : [
 			"loader!scripts/board.js",
 			"loader!scripts/input.js",
