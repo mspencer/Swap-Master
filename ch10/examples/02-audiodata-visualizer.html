@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=0">
+	<title>Chapter 10: Audio Data API (Mozilla)</title>
+	<style>
+		#myaudio {
+			width : 512px;
+			height : 64px;
+		}
+		
+		#output {
+			border : 1px solid black;
+		}
+	</style>
+</head>
+<body>
+
+    <div>
+		<canvas id="output" width="512" height="256"></canvas>
+	</div>
+
+	<audio id="myaudio" controls>
+		<source src="beat.mp3" type="audio/mpeg" />
+		<source src="beat.ogg" type="audio/ogg; codecs=&quot;vorbis&quot;" />
+	</audio>
+
+	<script>
+		var canvas = document.getElementById("output"),
+			ctx = canvas.getContext("2d"),
+			audio = document.getElementById("myaudio");
+			
+		audio.addEventListener("MozAudioAvailable", audioAvailable, false);
+		
+		function audioAvailable(event) {
+			var channels = audio.mozChannels,
+				ch = canvas.height / channels,
+				fb = event.frameBuffer, 
+				sample, i, j, x, y;
+
+			// fade to white
+			ctx.fillStyle = "rgba(255,255,255,0.2)";
+			ctx.fillRect(0,0, canvas.width, canvas.height);
+
+			// draw black bars
+			ctx.fillStyle = "black";
+			for (i=0; i < channels; i++ ) {
+				for (j=0; j < fb.length; j += channels) {
+					sample = fb[j + i];
+					x = j / fb.length * canvas.width;
+					y = ch * (i + 0.5) + sample * ch;
+					ctx.fillRect(x, y, 2, 2);
+				}
+			}
+		}
+
+    </script>
+    
+    <em style="display:block;margin-top:1em;">
+    Note: This example does not work when running locally (from a file:// url).
+    </em>
+  </body>
+</html>

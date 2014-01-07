@@ -1,5 +1,6 @@
 swapGame.screens["game-screen"] = (function() {
-    var settings = swapGame.settings,
+    var audio = swapGame.audio,
+    	settings = swapGame.settings,
     	board = swapGame.board,
         display = swapGame.display,
 		input = swapGame.input,		
@@ -25,6 +26,7 @@ swapGame.screens["game-screen"] = (function() {
 		board.initialise(function () {
 			display.initialise(function () {
 				display.redraw(board.getBoard(), function() {
+					audio.initialise();
 					advanceLevel();
 				});
 			});
@@ -85,6 +87,7 @@ swapGame.screens["game-screen"] = (function() {
 	}
 	
 	function advanceLevel () {
+		audio.play("levelup");
 		gameState.level++;
 		announce("Level " + gameState.level);
 		updateGameInfo();
@@ -111,6 +114,7 @@ swapGame.screens["game-screen"] = (function() {
 	}
 	
 	function gameOver () {
+		audio.play("gameover");
 		display.gameOver(function () {
 			announce("Game over");
 		});
@@ -161,6 +165,7 @@ swapGame.screens["game-screen"] = (function() {
 					display.moveBlocks(boardEvent.data, next);
 					break;
 				case "remove" :
+					audio.play("match");
 					display.removeBlocks(boardEvent.data, next);
 					break;
 				case "refill" :
@@ -170,6 +175,9 @@ swapGame.screens["game-screen"] = (function() {
 				case "score" :
 					addScore(boardEvent.data);
 					next();
+					break;
+				case "badswap" :
+					audio.play("badswap");
 					break;
 				default :
 					next();

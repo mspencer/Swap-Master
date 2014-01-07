@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=0">
+	<title>Chapter 10: Audio Data API (Mozilla)</title>
+	<style>
+		
+		#input {
+			border : 1px solid black;
+		}
+	</style>
+</head>
+<body>
+
+    <div id="input" style="width:512px;height:512px;"></div>
+
+	<script>
+		var audio = new Audio(),
+			input = document.getElementById("input"),
+
+			minFreq = 100,
+			maxFreq = 1200,
+
+			balance = 0,
+			freq = 0,
+			
+			sampleRate = 44100,
+			totalSamples = 0,
+			minSamples = sampleRate * 0.25 * 2; // 0.25 seconds for 2 channels
+
+		audio.mozSetup(2, sampleRate);
+
+		setInterval(updateAudio, 10);
+		
+		function updateAudio() {
+			if (!freq) {
+				return;
+			}
+			var sampleOffset = audio.mozCurrentSampleOffset(),
+				toneData = generateTone(freq, balance, audio.mozSampleRate);
+			
+			while (totalSamples - sampleOffset < minSamples) {
+				totalSamples += audio.mozWriteAudio(toneData);
+			}
+		}
+		
+		function generateTone(freq, balance, sampleRate) {
+			var samples = Math.round(sampleRate / freq),
+				data = new Float32Array(samples * 2),
+				sample, i;
+			
+			for (i = 0; i < samples; i++) {
+				sample = Math.sin(Math.PI * 2 * i / samples);
+				data[i * 2] = sample * (0.5 - balance);
+				data[i * 2 + 1] = sample * (0.5 + balance);
+			}
+			return data;
+		}
+		
+
+		input.addEventListener("mousedown", function(e) {
+			var rect = this.getBoundingClientRect();
+	
+			function update(e) {
+				var x = (e.clientX - rect.left) / rect.width,
+					y = (e.clientY - rect.top) / rect.height;
+
+				balance = (x - 0.5);
+				freq = minFreq + (maxFreq - minFreq) * (1 - y);
+				e.preventDefault();
+			}
+
+			input.addEventListener("mousemove", update, false);
+
+			input.addEventListener("mouseup", function(e) {
+				freq = 0;
+				input.removeEventListener("mousemove", update, false);
+				input.removeEventListener("mouseup", update, false);
+			}, false);
+			
+			update(e);
+		}, false);
+		
+		
+    </script>
+    
+    <em style="display:block;margin-top:1em;">
+    Note: This example does not work when running locally (from a file:// url).
+    </em>
+  </body>
+</html>
