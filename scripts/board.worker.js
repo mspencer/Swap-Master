@@ -8,8 +8,8 @@ addEventListener("message", function(event) {
 	
 	switch (message.command) {
 		case "initialise" : 
-			swapGame.settings = message.data;
-			board.initialise(callback);
+			swapGame.settings = message.data.settings;
+			board.initialise(message.data.startSwapGame, callback);
 			break;
 		case "swap" :
 			board.swap(

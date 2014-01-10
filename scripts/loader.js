@@ -73,6 +73,10 @@ window.addEventListener("load", function () {
 	// loading stage 1
 	Modernizr.load([
 		{
+			test: Modernizr.localstorage,
+			yep: "scripts/storage.js",
+			nope: "scripts/storage.cookie.js"
+		}, {
 			// these files are always loaded
 			load: [
 				"scripts/sizzle.js",

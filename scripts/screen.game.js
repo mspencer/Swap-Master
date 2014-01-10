@@ -7,7 +7,10 @@ swapGame.screens["game-screen"] = (function() {
 		dom = swapGame.dom,
 		$ = dom.$,
 		cursor,
-		firstRun = true;
+		firstRun = true,
+		paused = false,
+		pauseTime,
+		storage = swapGame.storage;
 
 	function startGame () {
 		gameState = {
@@ -23,11 +26,27 @@ swapGame.screens["game-screen"] = (function() {
 			selected: false
 		};
 		updateGameInfo();
-		board.initialise(function () {
+		var activeGame = storage.get("activeGameData"),
+			useActiveGame,
+			startSwapGame;
+		if (activeGame) {
+			useActiveGame = window.confirm("Do you want to continue your previous game?");
+			if (useActiveGame) {
+				gameState.level = gameState.level;
+				gameState.score = gameState.score;
+				startSwapGame = activeGame.blocks;
+			}
+		}
+		board.initialise(startSwapGame, function () {
 			display.initialise(function () {
 				display.redraw(board.getBoard(), function() {
 					audio.initialise();
-					advanceLevel();
+					if (useActiveGame) {
+						setLevelTimer(true, activeGame.time);
+						updateGameInfo();
+					} else {
+						advanceLevel();
+					}					
 				});
 			});
 		});
@@ -48,6 +67,47 @@ swapGame.screens["game-screen"] = (function() {
 		input.bind("moveDown", moveDown);
 		input.bind("moveLeft", moveLeft);
 		input.bind("moveRight", moveRight);
+
+		dom.bind("#game-screen button[name=exit]", "click", function() {
+			togglePause(true);
+			var exitGame = window.confirm("Do you want to return to the main menu?");
+			togglePause(false);
+			if (exitGame) {
+				saveGameData();
+				stopGame();
+				swapGame.game.showScreen("main-menu");
+			}
+		});
+	}
+
+	function stopGame () {
+		clearTimeout(gameState.timer);
+	}
+
+	function togglePause (enable) {
+		if (enable == paused) return; // no change
+
+		var overlay = $("#game-screen .pause-overlay")[0];
+		paused = enable;
+		overlay.style.display = paused ? "block" : "none";
+
+		if (paused) {
+			clearTimeout(gameState.timer);
+			gameState.timer = 0;
+			pauseTime = Date.now();
+		} else {
+			gameState.startTime += Date.now() - pauseTime;
+			setLevelTimer(false);
+		}
+	}
+
+	function saveGameData () {
+		storage.set("activeGameData", {
+			level:gameState.level,
+			score:gameState.score,
+			time:Date.now() - gameState.startTime,
+			blocks:board.getBoard()
+		});
 	}
 		
 	function updateGameInfo () {

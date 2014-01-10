@@ -255,13 +255,17 @@ swapGame.board = (function () {
 		}
 	}
 	
-	function initialise (callback) {
+	function initialise (startSwapGame, callback) {
 		settings = swapGame.settings;
 		numBlockTypes = settings.numBlockTypes;
 		baseScore = settings.baseScore;
 		cols = settings.cols;
 		rows = settings.rows;
-		fillBoard();
+		if (startSwapGame) {
+			blocks = startSwapGame;
+		} else {
+			fillBoard();
+		}
 		callback();
 	}
 	

@@ -16,7 +16,11 @@ swapGame.board = (function () {
 		worker = new Worker("scripts/board.worker.js");
 		
 		dom.bind(worker, "message", messageHandler);
-		post("initialises", settings, callback);
+		var data = {
+			settings: settings,
+			startSwapGame: startSwapGame
+		}
+		post("initialises", data, callback);
 	}
 	
 	function messageHandler(event) {
