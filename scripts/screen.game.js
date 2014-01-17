@@ -25,7 +25,7 @@ swapGame.screens["game-screen"] = (function() {
 			y: 0,
 			selected: false
 		};
-		updateGameInfo();
+		
 		var activeGame = storage.get("activeGameData"),
 			useActiveGame,
 			startSwapGame;
@@ -175,8 +175,13 @@ swapGame.screens["game-screen"] = (function() {
 	
 	function gameOver () {
 		audio.play("gameover");
+		stopGame();
+		storage.set("activeGameData", null);
 		display.gameOver(function () {
 			announce("Game over");
+			setTimeout(function () {
+				swapGame.game.showScreen("hiscore", gameState.score);
+			}, 2500);
 		});
 	}
 	

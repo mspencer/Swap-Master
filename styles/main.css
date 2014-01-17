@@ -244,7 +244,6 @@ ul.menu li button:active {
 	text-align:center;
 }
 .screen footer button {
-	margin-left:0.25em;
 	padding:0 0.75em;
 	font-family:OpenSans;
 	font-size:0.5em;
@@ -274,7 +273,7 @@ ul.menu li button:active {
 	margin-top:-0.5em;
 	width:100%;
 	font-family:OpenSans;
-	color:rgb(150,150,75);
+	color:#ffbf00;
 	text-shadow:0.03em 0.03em 0.03em rgb(255,255,0),
 				-0.03em -0.03em 0.03em rgb(255,255,0),
 				0.1em 0.15em 0.15em rgb(0,0,0);
@@ -287,6 +286,33 @@ ul.menu li button:active {
 
 .no-textshadow #game-screen .announcement {
 	filter:glow(color=#ffff00,strength=1), dropshadow(color=#000000,offX=3,offY=3);
+}
+
+/* Game screen - High score */
+#hiscore h2 {
+	margin-bottom:0.2em;
+	margin-top:0.25em;
+	font-size:1.1em;
+}
+#hiscore ol.score-list {
+	font-size:0.6em;
+	width:75%;
+	margin:0 10%;
+}
+#hiscore ol.score-list li {
+	width:100%;
+}
+#hiscore ol.score-list li span:nth-child(1) {
+	display:inline-block;
+	width:70%;
+}
+#hiscore ol.score-list li span:nth-child(2) {
+	display:inline-block;
+	width:30%;
+	text-align:center;
+}
+#hiscore footer {
+	text-align:center;
 }
 
 /* Announcement animation */
