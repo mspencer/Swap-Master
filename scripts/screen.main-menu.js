@@ -8,7 +8,7 @@ swapGame.screens["main-menu"] = (function () {
 			if (e.target.nodeName.toLowerCase() === "button") {
 				var action = e.target.getAttribute("name");
 				if (action == "exit-game") {
-					window.open('','_self').close();
+					game.showScreen("splash-screen");
 				} else {
 					game.showScreen(action);
 				}
