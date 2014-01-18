@@ -311,8 +311,19 @@ ul.menu li button:active {
 	width:30%;
 	text-align:center;
 }
-#hiscore footer {
+#hiscore footer,
+#about footer {
 	text-align:center;
+}
+
+/* About */
+#about h2 {
+	margin-top:1em;
+}
+#about p {
+	text-align:center;
+	padding:0 2em;
+	font-size:0.6em;
 }
 
 /* Announcement animation */

@@ -7,7 +7,11 @@ swapGame.screens["main-menu"] = (function () {
 		dom.bind("#main-menu ul.menu", "click", function (e) {
 			if (e.target.nodeName.toLowerCase() === "button") {
 				var action = e.target.getAttribute("name");
-				game.showScreen(action);
+				if (action == "exit-game") {
+					window.open('','_self').close();
+				} else {
+					game.showScreen(action);
+				}
 			}
 		});
 	}
