@@ -6,7 +6,7 @@
 /* use a smaller base size for small screens */
 @media (max-device-width:480px) {
 	#game {
-		font-size:32px;
+		font-size:40px;
 	}
 }
 
