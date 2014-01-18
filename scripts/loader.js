@@ -15,7 +15,7 @@ var swapGame = {
 			CLICK:"selectBlock",
 			TOUCH:"selectBlock"
 		},
-		baseLevelTimer: 600,
+		baseLevelTimer: 60000,
 		baseLevelScore: 1500,
 		baseLevelExp: 1.05
 	},
